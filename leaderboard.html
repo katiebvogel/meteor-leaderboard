@@ -6,8 +6,8 @@
     <p>
       {{> loginButtons}}
     </p>
+
     {{> leaderboard}}
-    {{> prizes}}
 </body>
 
 
@@ -15,6 +15,13 @@
 
 
 <template name="leaderboard">
+  <button class="prizeButton">See Prize Options</button>
+  <h1>Fabulous Prizes</h1>
+  <p>
+  {{#if showPrizes}}
+    {{> prizes}}
+  {{/if}}
+  </p>
   {{#if currentUser}}
   {{> addPlayerForm}}
 <ul>
@@ -56,11 +63,8 @@
 
 
 
-
-
 <template name="prizes">
-  <h1>Fabulous Prizes</h1>
-  <button class="prizeButon">See Prize Options</button>
+  <h3>There are prizes if someone adds them to the DB after a reset!</h3>
   <ul>
     {{#each prize}}
       <li class="prize {{selectedPrizeClass}}">

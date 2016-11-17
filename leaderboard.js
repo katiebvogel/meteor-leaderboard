@@ -27,6 +27,10 @@ if(Meteor.isClient){
         'selectedPlayer': function(){
             var selectedPlayer = Session.get('selectedPlayer');
             return PlayersList.findOne({ _id: selectedPlayer });
+          },
+        'showPrizes': function(){
+          var showPrizes = Session.get('showPrizes');
+          return showPrizes;
         }
     });
     Template.leaderboard.events({
@@ -45,8 +49,17 @@ if(Meteor.isClient){
         'click .remove': function(){
           var selectedPlayer = Session.get('selectedPlayer');
           Meteor.call('removePlayer', selectedPlayer);
+        },
+        'click .prizeButton': function(event){
+          console.log("you have clicked that button!");
+          // event.preventDefault();
+          Session.set('showPrizes', true);
         }
     });
+
+
+
+
 
     Template.prizes.helpers({
       'prize': function(){
@@ -66,9 +79,6 @@ if(Meteor.isClient){
         }
     });
     Template.prizes.events({
-      'click .prizeButton': function(){
-        return "prizeButton"
-      },
       'click .prize': function(){
         var prizeId = this._id;
         Session.set('selectedPrize', prizeId);
@@ -86,8 +96,10 @@ if(Meteor.isClient){
       }
     });
 
-    Meteor.subscribe('thePlayers');
 
+
+    Meteor.subscribe('thePlayers');
+    Meteor.subscribe('thePrizes');
 
 }
 //end of the block of client-side code ///
@@ -102,6 +114,11 @@ if(Meteor.isServer){
     var currentUserId = this.userId;
     return PlayersList.find({ createdBy: currentUserId });
   });
+
+  Meteor.publish('thePrizes', function(){
+    return PrizeList.find().fetch();
+  });
+
 // console.log( PlayersList.find().fetch());
 
 }
