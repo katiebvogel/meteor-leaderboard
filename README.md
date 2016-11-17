@@ -24,4 +24,10 @@ This application is a simple First Meteor App which allows "players" to keep sco
 3.  meteor remove autopublish
   -This is for security purposes.  Autopublish comes with meteor as a convenience for development.  Removing autopublish secures the information in the database (so it can no longer be accessed through the console)
   -We then added in a Meteor.publish function to the Meteor.isServer conditional and also added a Meteor.subscribe function to the Meteor.isClient conditional.  There are some more specifics about making sure the currentUserId is used as an identifier so as to publish only the players created by that logged-in user.
-  
+
+4. meteor remove insecure
+  -This will make it so random users cannot interact with the PlayersList DB. Before this step, we could still create, remove, and update player information from the console (we just couldn't GET the information printed as of the previous step
+
+5.  Create Meteor.methods outside of isClient and outside of isServer conditionals
+
+6.  More security for data inserts:    meteor add check

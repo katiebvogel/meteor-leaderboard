@@ -1,9 +1,14 @@
-
+//Collections Defined
 PlayersList = new Mongo.Collection('players');
 PrizeList = new Mongo.Collection('prizes');
 
+
+
+
+
+///////////////////////////////
+//Client side code
 if(Meteor.isClient){
-  Meteor.subscribe('thePlayers');
 
     Template.leaderboard.helpers({
         'player': function(){
@@ -31,16 +36,15 @@ if(Meteor.isClient){
         },
         'click .increment': function(){
             var selectedPlayer = Session.get('selectedPlayer');
-            PlayersList.update({ _id: selectedPlayer }, { $inc: {score: 5} });
+            Meteor.call('updateScore', selectedPlayer, 5);
         },
         'click .decrement': function(){
             var selectedPlayer = Session.get('selectedPlayer');
-            PlayersList.update({ _id: selectedPlayer }, {$inc: {score: -5} });
+            Meteor.call('updateScore', selectedPlayer, -5);
         },
         'click .remove': function(){
           var selectedPlayer = Session.get('selectedPlayer');
-          alert("Are you sure you want to remove?");
-          PlayersList.remove({_id: selectedPlayer });
+          Meteor.call('removePlayer', selectedPlayer);
         }
     });
 
@@ -74,21 +78,24 @@ if(Meteor.isClient){
     Template.addPlayerForm.events({
       'submit form': function(){
         event.preventDefault();
-        var playerScoreVar = event.target.playerScore.value;
+        // var playerScoreVar = event.target.playerScore.value;
         var playerNameVar = event.target.playerName.value;
-        var currentUserId = Meteor.userId();
-        PlayersList.insert({
-          name: playerNameVar,
-          score: playerScoreVar,
-          createdBy: currentUserId,
-          createdAt: new Date()
-        });
+        Meteor.call('createPlayer', playerNameVar);
         event.target.playerName.value = "";
-        event.target.playerScore.value = "";
+        // event.target.playerScore.value = "";
       }
     });
-}
 
+    Meteor.subscribe('thePlayers');
+
+
+}
+//end of the block of client-side code ///
+///////////////////////////////////////
+
+
+//////////////////////
+//server side code
 if(Meteor.isServer){
 
   Meteor.publish('thePlayers', function(){
@@ -98,3 +105,42 @@ if(Meteor.isServer){
 // console.log( PlayersList.find().fetch());
 
 }
+
+
+
+
+/////////////////////////////////////////
+//Meteor Methods
+Meteor.methods({
+  'createPlayer': function(playerNameVar){
+    check(playerNameVar, String);
+    // check(playerScoreVar, Number);
+    var currentUserId = Meteor.userId();
+    if(currentUserId){
+      PlayersList.insert({
+        name: playerNameVar,
+        score: 0,
+        createdBy: currentUserId,
+        createdAt: new Date()
+      });
+    }
+  },
+  'removePlayer': function(selectedPlayer){
+    // alert("Are you sure you want to remove?");
+    check(selectedPlayer, String);
+    var currentUserId = Meteor.userId();
+    if(currentUserId){
+      PlayersList.remove({ _id: selectedPlayer, createdBy: currentUserId });
+    }
+  },
+  'updateScore': function(selectedPlayer, scoreValue){
+    check(selectedPlayer, String);
+    // check(scoreValue, Number);
+    var currentUserId = Meteor.userId();
+    if(currentUserId){
+      PlayersList.update({ _id: selectedPlayer, createdBy: currentUserId }, { $inc: {score: scoreValue} });
+    }
+  }
+});
+//end Meteor methods///
+//////////////////////////////////////////
