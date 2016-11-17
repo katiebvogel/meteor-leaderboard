@@ -3,9 +3,13 @@ PlayersList = new Mongo.Collection('players');
 PrizeList = new Mongo.Collection('prizes');
 
 if(Meteor.isClient){
+  Meteor.subscribe('thePlayers');
+
     Template.leaderboard.helpers({
         'player': function(){
-            return PlayersList.find({}, { sort: {score: -1, name: 1} });
+            var currentUserId = Meteor.userId();
+            return PlayersList.find({createdBy: currentUserId},
+                { sort: {score: -1, name: 1} });
         },
         'selectedClass': function(){
             var playerId = this._id;
@@ -32,12 +36,17 @@ if(Meteor.isClient){
         'click .decrement': function(){
             var selectedPlayer = Session.get('selectedPlayer');
             PlayersList.update({ _id: selectedPlayer }, {$inc: {score: -5} });
+        },
+        'click .remove': function(){
+          var selectedPlayer = Session.get('selectedPlayer');
+          alert("Are you sure you want to remove?");
+          PlayersList.remove({_id: selectedPlayer });
         }
     });
 
     Template.prizes.helpers({
       'prize': function(){
-        return PrizeList.find({});
+        return PrizeList.find({}, {sort: {item: 1} });
       },
       'selectedPrizeClass': function(){
           var prizeId = this._id;
@@ -53,13 +62,39 @@ if(Meteor.isClient){
         }
     });
     Template.prizes.events({
+      'click .prizeButton': function(){
+        return "prizeButton"
+      },
       'click .prize': function(){
         var prizeId = this._id;
         Session.set('selectedPrize', prizeId);
       }
     });
+
+    Template.addPlayerForm.events({
+      'submit form': function(){
+        event.preventDefault();
+        var playerScoreVar = event.target.playerScore.value;
+        var playerNameVar = event.target.playerName.value;
+        var currentUserId = Meteor.userId();
+        PlayersList.insert({
+          name: playerNameVar,
+          score: playerScoreVar,
+          createdBy: currentUserId,
+          createdAt: new Date()
+        });
+        event.target.playerName.value = "";
+        event.target.playerScore.value = "";
+      }
+    });
 }
 
 if(Meteor.isServer){
-    // this code only runs on the server
+
+  Meteor.publish('thePlayers', function(){
+    var currentUserId = this.userId;
+    return PlayersList.find({ createdBy: currentUserId });
+  });
+// console.log( PlayersList.find().fetch());
+
 }
