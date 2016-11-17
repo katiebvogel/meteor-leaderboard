@@ -4,6 +4,7 @@
 <body>
     <h1>Leaderboard</h1>
     {{> leaderboard}}
+    {{> prizes}}
 </body>
 
 <template name="leaderboard">
@@ -12,11 +13,27 @@
         <li class="player {{selectedClass}}">{{name}}: {{score}}</li>
     {{/each}}
     {{#if selectedPlayer}}
-        <li>Selected Player: {{selectedPlayer.name}}</li>
+        <li><h3>Selected Player:</h3> {{selectedPlayer.name}}</li>
         <li>
             <button class="increment">Give 5 Points</button>
             <button class="decrement">Take 5 Points</button>
         </li>
     {{/if}}
 </ul>
+</template>
+
+<template name="prizes">
+  <h1>Fabulous Prizes</h1>
+  <ul>
+    {{#each prize}}
+      <li class="prize {{selectedPrizeClass}}">
+        {{item}}
+      </li>
+      {{/each}}
+      {{#if selectedPrize}}
+        <li>
+          <h3>This is the prize you selected:</h3> {{selectedPrize.item}}
+        </li>
+      {{/if}}
+  </ul>
 </template>
