@@ -31,3 +31,8 @@ This application is a simple First Meteor App which allows "players" to keep sco
 5.  Create Meteor.methods outside of isClient and outside of isServer conditionals
 
 6.  More security for data inserts:    meteor add check
+
+11/18/16
+
+Added 3 files for Evereve sandboxing
+*note*  for images to be rendered in meteor, store them in a folder called "public"

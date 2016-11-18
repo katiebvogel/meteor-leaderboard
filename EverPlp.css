@@ -1,0 +1,82 @@
+.trendsend-throw {
+    background-color: #CA235A;
+    color: white;
+    display: block;
+    height: 35px;
+    float: left;
+    width: 100%;
+    -webkit-transition: -webkit-transform 500ms;
+}
+
+.trendsend-throw p{
+    font-size: .75em;
+    padding-left: 5px;
+    -webkit-transition: -webkit-transform 500ms;
+}
+
+.logo img {
+    display: block;
+    padding: 20px;
+    top: 0px;
+    left: 0px;
+    float: left;
+    -webkit-transition: -webkit-transform 500ms;
+}
+
+.logo {
+    width: 100%
+    -webkit-transition: -webkit-transform 500ms;
+}
+
+.navbar a{
+    color: black;
+    float: left;
+    /*position: absolute;*/
+    display: block;
+    -webkit-transition: -webkit-transform 500ms;
+}
+
+.global-banner img {
+    display: block;
+    width: 100%;
+    -webkit-transition: -webkit-transform 500ms;
+}
+
+.category-header {
+    display: block;
+    -webkit-transition: -webkit-transform 500ms;
+}
+
+.product-images img {
+    display: block;
+    width: 100%;
+    -webkit-transition: -webkit-transform 500ms;
+}
+
+.product-title {
+    display: block;
+    -webkit-transition: -webkit-transform 500ms;
+}
+
+.footer {
+    display: block;
+    -webkit-transition: -webkit-transform 500ms;
+}
+
+a:active, a:link, a:visited, a:hover {
+    color: white;
+    -webkit-transition: -webkit-transform 500ms;
+}
+
+.sorting img {
+    display: block;
+    width: 100%;
+    padding: 5px;
+    -webkit-transition: -webkit-transform 500ms;
+}
+
+p {
+    font-size: 1em;
+    font-family: 'Nunito', sans-serif;
+    -webkit-transition: -webkit-transform 500ms;
+}
