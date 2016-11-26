@@ -8,10 +8,15 @@
     </p>
 
     {{> leaderboard}}
+    {{> EvereveDisplay}}
+    {{> tacos }}
 </body>
 
-
-
+<template name="tacos">
+  <div>
+    {{> React component = tacos}}
+  </div>
+</template>
 
 
 <template name="leaderboard">
@@ -57,24 +62,4 @@
     <input type="submit" value="Add Player" />
 
   </form>
-</template>
-
-
-
-
-
-<template name="prizes">
-  <h3>There are prizes if someone adds them to the DB after a reset!</h3>
-  <ul>
-    {{#each prize}}
-      <li class="prize {{selectedPrizeClass}}">
-        {{item}}
-      </li>
-      {{/each}}
-      {{#if selectedPrize}}
-        <li>
-          <h3>This is the prize you selected:</h3> {{selectedPrize.item}}
-        </li>
-      {{/if}}
-  </ul>
 </template>

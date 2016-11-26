@@ -36,3 +36,20 @@ This application is a simple First Meteor App which allows "players" to keep sco
 
 Added 3 files for Evereve sandboxing
 *note*  for images to be rendered in meteor, store them in a folder called "public"
+
+11/21/16
+I ran:
+meteor add react-template-helper
+^^ Lets you easily include React components in Meteor templates. Pass the component class through the component argument.
+
+
+meteor add gadicc:blaze-react-component
+-This will allow you to use Blaze Templates within React ^^  (not installed or implemented)
+
+Re-visiting the heierarchy of components/templates:  
+Leaderboard
+  Prizes (moved html partial to it's own file)
+  EverevePlp
+
+
+  As of Meteor v1.2, the React example here will simply compile to JavaScript (given we install the React package via NPM with npm i --save react react-dom the line at the top of our example is pulling in React from the react NPM package). It’s important to note that with React, we don’t have to write our code in JSX and can use plain JavaScript instead. The difference? A slightly more verbose process. As you’ll learn, JSX is the clear winner when it comes to working with React.

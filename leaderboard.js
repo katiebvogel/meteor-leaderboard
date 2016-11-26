@@ -2,7 +2,7 @@
 PlayersList = new Mongo.Collection('players');
 PrizeList = new Mongo.Collection('prizes');
 
-
+import tacos from "./imports/tacos.jsx";
 
 
 
@@ -31,6 +31,9 @@ if(Meteor.isClient){
         'showPrizes': function(){
           var showPrizes = Session.get('showPrizes');
           return showPrizes;
+        },
+        tacos(){
+          return tacos;
         }
     });
     Template.leaderboard.events({
